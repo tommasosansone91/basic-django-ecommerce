@@ -1,0 +1,197 @@
+<!-- Qui costruisco la navigation toolbar e altri contenuti che voglio mettere in ogni pagina-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- meta tag per indicizzazione -->    
+    <!-- <meta name="keywords" content="metaglossario, glossario, Gestisco, Interreg, protezione civile">
+    <meta name="description" content="Metaglossario del progetto Interreg Gestisco"> -->
+
+    {% load static %}
+
+    <!-- favicon -->
+    <!-- <link rel="shortcut icon" href="{% static 'img/metaglossary_favicon_6.png' %}" /> -->
+   
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <title>AQI Luftdaten</title>
+  </head>
+  <body>
+
+
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        
+        <!-- Pagina iniziale -->
+        <!-- questa nel tutorial non c è -->
+
+        
+        <a class="navbar-brand" href="{% url 'home' %}">Home</a> 
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+
+              <!-- Info -->   
+              <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Info</a>
+                
+                <div class="dropdown-menu">
+
+                  <a class="dropdown-item" href="{% url 'about' %}">About</a>
+                
+                  
+                  {% comment %} <div class="dropdown-divider"></div> {% endcomment %}
+
+
+                </div>
+              </li>
+
+
+                <!-- Pag 1 -->
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Pag 1<span class="sr-only">(current)</span></a>                
+              </li>
+
+
+
+              <!-- Login -->
+
+              <!-- menu visibile a chi è loggato come utente -->
+
+              {% if user.is_authenticated %}
+
+              <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{request.user.username}}</a>
+                
+                <div class="dropdown-menu dropdown-menu-right">
+
+                  {% comment %} non sono riuscito ad implementare un menu utenti per visualizzarne i dati bio del modello userprofileinfo {% endcomment %}
+                  {% comment %} <a class="dropdown-item" href="">Profilo</a>   {% endcomment %}
+
+                    <!-- menu visibile a chi è loggato come user ma non è superuser -->
+                      {% if not user.is_staff %}
+
+                      {% comment %} <a class="dropdown-item" href="{% url 'home' %}">Per utenti</a> {% endcomment %}
+
+                    <!-- menu visibile a chi è loggato come superuser -->
+
+                      {% elif request.user.is_staff %}
+                    
+                        <a class="dropdown-item" href="{% url 'admin:index' %}">Sezione admin</a>
+
+                      
+                      {% endif %}
+                  
+                  <a class="dropdown-item" href="{% url 'home' %}">Log out</a>
+
+                </div>
+                
+              </li>
+
+
+              {% elif not user.is_authenticated %}
+
+              <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Login</a>
+                
+                <div class="dropdown-menu">
+
+                  
+                  <a class="dropdown-item" href="{% url 'home' %}">Accedi</a>
+
+                  {% comment %} <a class="dropdown-item" href="{% url 'home' %}">Richiedi l'accesso</a> {% endcomment %}
+
+                </div>
+
+              </li>
+
+              {% endif %}
+
+
+
+              <!-- Run script -->
+               {% comment %} <li class="nav-item" style="background-color:rgb(15, 233, 106);color:rgb(54, 54, 54)">
+                <a class="nav-link" id="run_script" href="{% url 'run_script' %}" onclick="script_in_corso(script_status)">Run Script</a>
+              </li>  {% endcomment %}
+
+
+            </ul>
+          </div>
+        </nav>
+
+
+        <br/>
+
+
+
+      <br> 
+
+    <!-- formattazione del body -->
+
+    <div class="container">
+
+      <!-- INSERISCI QUI L'INIZIO PAGINA -->
+
+        {% block content %}
+
+        <!-- INCOLLARE COSE QUI IN MEZZO NON SERVE PERCHè NON LE RAPPRESENTA -->
+
+        
+        {% endblock %}
+
+        
+        
+        <!-- INSERISCI QUI IL PIè DI PAGINA -->
+
+      <br><br><br>
+
+      <hr>  
+
+      <div class="bottom-bar">
+
+        {% comment %} <span>  <i><img id="logo_bottom_bar" src="{% static 'img/loghi_partner/lombardia-minilogo.png' %}" align="middle"></i></span>
+        <span>  <i><img id="logo_bottom_bar" src="{% static 'img/loghi_partner/ticino-minilogo.png' %}" align="middle"></i></span>
+        <span>  <i><img id="logo_bottom_bar" src="{% static 'img/loghi_partner/poli-minilogo.png' %}" align="middle"></i></span>
+        <span>  <i><img id="logo_bottom_bar" src="{% static 'img/loghi_partner/fpm-minilogo.png' %}" align="middle"></i></span>
+        <span>  <i><img id="logo_bottom_bar" src="{% static 'img/loghi_partner/supsi-minilogo.png' %}" align="middle"></i></span>
+        <span>  <i><img id="logo_bottom_bar" src="{% static 'img/loghi_partner/como-minilogo.png' %}" align="middle"></i></span>
+        <span>  <i><img id="logo_bottom_bar" src="{% static 'img/loghi_partner/varese-minilogo.png' %}" align="middle"></i></span>
+        <span>  <i><img id="logo_bottom_bar" src="{% static 'img/loghi_partner/arpap-minilogo.png' %}" align="middle"></i></span>
+         {% endcomment %}
+
+      </div>
+
+      <hr>
+
+      </div>
+
+      <br>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+      
+    {% comment %} <script type="text/javascript" src={% static "js/update_script_status.js" %}></script> {% endcomment %}
+
+    <!-- css -->
+    {% comment %} <link rel="stylesheet" type="text/css" href={% static "css/top_navbar_style.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/bottom_navbar_style.css" %}> {% endcomment %}
+
+    
+  
+  </body>
+</html>
+

@@ -1,0 +1,24 @@
+conda create --name python_ecommerce_venv
+
+
+conda activate python_ecommerce_venv
+
+
+python manage.py collectstatic
+è il comando che uso per muovere gli static fies
+
+
+se ho
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
+
+e faccio in
+
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "static_root")
+
+ottengo che 
+python manage.py collectstatic
+copia gli statics in 
+132 static files copied to 'C:\Users\Tommaso\Django rest framework\Udemy Django\static_cdn\static_root'.
+compone l cartelle una dentro l'altra come dettato dalle virgole
+
+questo da l'idea del media root
