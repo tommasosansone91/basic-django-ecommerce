@@ -1,0 +1,11 @@
+<form method='GET' action='{% url "search:query" %}'' class="form my-2 my-lg-0">
+    <div class="input-group">
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="q" value='{{request.GET.q}}'>
+        <!-- name da il nome alla variabile che viene cercata dalla view con request.GET.get('q') -->
+        <!-- value valorizza di default il campo di input, ossia il campo di ricerca -->
+        <!-- se ci inserisco {{request.GET.q}} vuol dire che denro ci apparirà il valore cercato con l'ultima ricerca, se non è stata fatta nessuna ricerca sarà vuoto -->
+        <span class="input-group-btn">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </span> 
+    </div>
+  </form>

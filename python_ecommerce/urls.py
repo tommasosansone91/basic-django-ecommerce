@@ -14,24 +14,58 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
-from . import views
-
+# sarebbe meglio importarle nominativamente
+# from . import views
+from .views import home_page, about_page, contact_page, login_page, register_page
 
 # per gli static files
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.views.generic.base import TemplateView
+
+
+
+# from products.views import (
+#     ProductListView, 
+#     product_list_view, 
+#     ProductDetailView, 
+#     ProductDetailSlugView,
+#     product_detail_view,
+#     ProductFeaturedListView,
+#     ProductFeaturedDetailView,
+# )
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', views.home_page, name="home"),
-    path('about/', views.about_page, name="about"),
-    path('contact/', views.contact_page, name="contact"),
-    path('login/', views.login_page, name="login"),
-    path('register/', views.register_page, name="register"),
+    path('', home_page, name="home"),
+    path('about/', about_page, name="about"),
+    path('contact/', contact_page, name="contact"),
+    path('login/', login_page, name="login"),
+    path('register/', register_page, name="register"),
+    path('bootstrap/', TemplateView.as_view(template_name='bootstrap/example.html')),
+
+    path('', include("products.urls", namespace='products')), #spostato nell altro urls
+    # con namespace da il nome a tutto iò che è dentro include
+    # che dovrà essere richaimato con namespace: url name speicfico
+
+#     path('products/', ProductListView.as_view()), #spostato nell altro urls
+#     path('products-fbv/', product_list_view),
+
+# # posso chiamarli id o pk a mio piacimento
+#     # path('products/<int:pk>', ProductDetailView.as_view()),
+#     path('products/<str:slug>', ProductDetailSlugView.as_view()),
+#     path('products-fbv/<int:pk>', product_detail_view),
+
+#     path('featured/', ProductFeaturedListView.as_view()),
+#     path('featured/<int:pk>', ProductFeaturedDetailView.as_view()),
+
+    path('', include("search.urls", namespace='search')),
+    
 ]
 
 # setup e serve local e media files - python ecomemrce

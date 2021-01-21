@@ -16,6 +16,7 @@ def home_page(request):
 
     return render(request, "home.html", context )
 
+
 def about_page(request):
 
     context = {
@@ -24,6 +25,7 @@ def about_page(request):
         }
 
     return render(request, "about.html", context )
+
 
 def contact_page(request):
 
@@ -34,6 +36,7 @@ def contact_page(request):
     "title":"Contact",
     "content":"Welcome to the contact page!",
     "form":contact_form,
+    "brand":"new brand name,"
     }
 
     if contact_form.is_valid():
