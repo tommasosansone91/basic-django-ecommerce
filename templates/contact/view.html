@@ -37,14 +37,14 @@
         <input type='text' class='form-control' placeholder="Name" name='fullname'>
         <input type='email' class='form-control' placeholder="Email" name='email'>
         <input type='content' class='form-control' placeholder="Your content..." name='content'>
-        <button type='submit' class="btn btn-default">Submit</button>
+        <button type='submit' class="btn btn-primary">Submit</button>
       </form> -->
 
       <form method='POST'>
         {% csrf_token %}
         {{ form }}
         <br>
-        <button type='submit' class="btn btn-default">Submit</button>
+        <button type='submit' class="btn btn-primary">Submit</button>
       </form>
 
       </div>

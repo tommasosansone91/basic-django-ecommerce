@@ -76,3 +76,11 @@ at4enzione activate
 Product.objects.get
 vs
 Product.object.get
+
+
+------------
+
+I Signal sa mi servono per fare in modo che quando cambio gli oggetti contenuti nel carrello dal django-admin di quel Model carrello e il prezzo viene adeguato di conseguenza
+
+
+i segnali vengono mandati quando succedono cose particolari al modello. eg salvataggio

@@ -4,7 +4,7 @@ from django.db import models
 import os
 
 from django.db.models.signals import pre_save, post_save
-from products.utils import unique_slug_generator
+from python_ecommerce.utils import unique_slug_generator
 
 from django.urls import reverse
 
@@ -94,6 +94,11 @@ class Product(models.Model):
 # per django dpo il v1
     # def __unicode__(self):
     #     return self.title
+
+    @property
+    def name(self):
+        return self.title
+        # è una spece di alias, creo name che hs lo stesso valore di title
 
 
 def product_pre_save_receiver(sender, instance, *arge, **kwargs):

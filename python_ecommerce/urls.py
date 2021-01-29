@@ -26,6 +26,8 @@ from django.conf.urls.static import static
 
 from django.views.generic.base import TemplateView
 
+from carts.views import cart_home
+
 
 
 # from products.views import (
@@ -65,6 +67,11 @@ urlpatterns = [
 #     path('featured/<int:pk>', ProductFeaturedDetailView.as_view()),
 
     path('', include("search.urls", namespace='search')),
+
+    # path('cart/', cart_home, name="cart"),
+    path('cart/', include("carts.urls", namespace="cart")),
+
+    # path('', include("carts.urls", namespace='carts')),
     
 ]
 
