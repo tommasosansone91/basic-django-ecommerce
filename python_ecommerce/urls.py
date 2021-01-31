@@ -18,7 +18,7 @@ from django.urls import path, include
 
 # sarebbe meglio importarle nominativamente
 # from . import views
-from .views import home_page, about_page, contact_page, login_page, register_page
+from .views import home_page, about_page, contact_page
 
 # per gli static files
 from django.conf import settings
@@ -27,6 +27,8 @@ from django.conf.urls.static import static
 from django.views.generic.base import TemplateView
 
 from carts.views import cart_home
+
+from accounts.views import login_page, register_page
 
 
 

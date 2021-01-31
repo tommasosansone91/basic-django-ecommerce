@@ -20,18 +20,18 @@ class CartManager(models.Manager):
 
     def new_or_get(self, request):
         cart_id = request.session.get("cart_id", None)
-        print(cart_id)
+        # print(cart_id)
         qs = self.get_queryset().filter(id=cart_id)
         if qs.count() == 1 :
             new_obj = False
-            print('Cart ID exists')
+            # print('Cart ID exists')
             cart_obj = qs.first()
 
             if request.user.is_authenticated and cart_obj.user is None:
                 cart_obj.user = request.user
                 cart_obj.save()
         else:   
-            print('Cart ID does not exist')     
+            # print('Cart ID does not exist')     
             cart_obj = Cart.objects.new(user=request.user)
             new_obj = True
             request.session['cart_id'] = cart_obj.id
@@ -68,8 +68,8 @@ def m2m_changed_cart_receiver(sender, instance, action, *arge, **kwargs):
     print(action)
 
     if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
-        print(instance.products.all())
-        print(instance.total)
+        # print(instance.products.all())
+        # print(instance.total)
         products = instance.products.all()
         total = 0
 
