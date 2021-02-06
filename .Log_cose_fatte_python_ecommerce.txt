@@ -94,3 +94,10 @@ così funziona
 
 così no, anche se il tag è registrato
 <a class="nav-link" href="{% 'logout_url' %}">Logout</a>
+
+
+
+---------------------
+
+se c'è corrispondenza di template e variabile e view, ma la variabile non è mostrata nel template,
+probabilmente è un problema di indentazione logica
