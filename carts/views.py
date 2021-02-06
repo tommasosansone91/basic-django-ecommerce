@@ -12,45 +12,16 @@ from orders.models import Order
 #     print('new cart created')
 #     return cart_obj
 
+from accounts.forms import LoginForm
+
+from billing.models import BillingProfile
+
+from accounts.forms import GuestForm
+
+from accounts.models import GuestEmail
+
+
 def cart_home(request):
-
-# faccio tutto coi signals e receiver
-    # cart_obj, new_obj = Cart.objects.new_or_get(request)
-
-
-    # # cart_id = request.session.get("cart_id", None)
-
-    # # # # isinstance(cart_id, int) è per assicurarsi che il termine 1 sia del tipo dl termine 2
-    # # # if cart_id is None and isinstance(cart_id, int):        
-
-    # # qs = Cart.objects.filter(id=cart_id)
-    # # if qs.count()==1:
-    # #     print('Cart ID exists')
-    # #     cart_obj=qs.first()
-    # #     if request.user.is_authenticated and cart_obj.user is None:
-    # #         cart_obj.user = request.user
-    # #         cart_obj.save()
-
-        
-    # # else:        
-    # #     cart_obj = Cart.objects.new(user=request.user)
-    # #     request.session['cart_id']=cart_obj.id
-            
-    # # # print(request.session) #
-    # # # print(dir(request.session)) # dir mi mostra tutti i metodi di un modulo
-
-    # products = cart_obj.products.all()
-
-    # total = 0
-    # for x in products:
-    #     total += x.price
-
-    # print("total")
-    # print(total)
-    # cart_obj.total = total
-    # cart_obj.save()
-
-
 
     cart_obj, new_obj = Cart.objects.new_or_get(request)
 
@@ -88,6 +59,41 @@ def checkout_home(request):
 
     if cart_created or cart_obj.products.count() == 0:
         return redirect("cart:home")    
+
+    user = request.user
+    billing_profile = None
+
+    login_form = LoginForm()
+    guest_form = GuestForm()
+    guest_email_id = request.session.get('guest_email_id')
+
+    if user.is_authenticated:
+        billing_profile, billing_profile_created = BillingProfile.objects.get_or_create(user=user, email=user.email)
+
+    elif guest_email_id is not None:
+        guest_email_obj = GuestEmail.objects.get(id=guest_email_id)
+        billing_profile, billing_guest_profile_created = BillingProfile.objects.get_or_create(email=guest_email_obj.email)
+
     else:
-        order_obj, new_order_obj = Order.objects.get_or_create(cart=cart_obj)
-    return render(request, "carts/checkout.html", {"order":order_obj} )
+        pass
+
+        order_qs = Order.objects.filter(cart=cart_obj, active=True)
+        
+        if order_qs.exists():
+            order_qs.update(active=False)
+        else:
+            order_obj = Order.objects.create(
+                billing_profile=billing_profile, 
+                cart=cart_obj)
+        
+
+
+    context = {
+        "object": order_obj,
+        "billing_profile": billing_profile,
+        "login_form": login_form,
+        "guest_form" : guest_form
+
+    }
+
+    return render(request, "carts/checkout.html", context )

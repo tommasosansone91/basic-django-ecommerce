@@ -84,3 +84,13 @@ I Signal sa mi servono per fare in modo che quando cambio gli oggetti contenuti 
 
 
 i segnali vengono mandati quando succedono cose particolari al modello. eg salvataggio
+
+
+-------------------
+
+
+così funziona
+<a class="nav-link" href="{% url 'logout' %}">Logout</a>
+
+così no, anche se il tag è registrato
+<a class="nav-link" href="{% 'logout_url' %}">Logout</a>

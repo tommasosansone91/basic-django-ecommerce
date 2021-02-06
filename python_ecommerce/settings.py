@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'carts',
     'orders',
     'accounts',
+    'billing',
 
     # django apps
     'django.contrib.admin',
@@ -59,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'python_ecommerce.urls'
 
@@ -163,3 +166,5 @@ ecommerce > src > ecommerce > forms, settings, views....
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
 
+# aggiunto per cambiare il link di redirect della pagina di logout
+LOGOUT_REDIRECT_URL = '/login'

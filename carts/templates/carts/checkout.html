@@ -2,12 +2,39 @@
 
 
 {% block content %}
+
+{{ object.order_id }} &nbsp&nbsp {{ object.cart }}
+
+
+{% if not billing_profile %}
+<div class="row text-center">
+
+    <div class='col-12 col-md-6'>
+        <p class="lead">Login</p>
+        {% include 'accounts/snippets/form.html' with form=login_form next_url=request.build_absolute_uri %}
+    </div>
+
+    <br><br><br>
+
+    <div class='col-12 col-md-6'>
+        continue as guest
+        {% url 'guest_register' as guest_register_url %}
+        {% include 'accounts/snippets/form.html' with form=guest_form next_url=request.build_absolute_uri action_url=guest_register_url %}   
+    </div>
+
+<!-- qui è obbligatorio usare la struttura alias perchè non puoi mettere url tag dentro action_url= -->
+
+</div>
+
+{% else %}
+
 <h1>Checkout</h1>
 
-<p>Cart total: {{ order.cart.total }}</p>
-<p>Shipping total: {{ order.shipping_total }}</p>
-<p>Order total: {{ order.total }}</p>
+<p>Cart total: {{ object.cart.total }}</p>
+<p>Shipping total: {{ object.shipping_total }}</p>
+<p>Order total: {{ object.total }}</p>
 
+{% endif %}
 
 
 {% endblock %}
