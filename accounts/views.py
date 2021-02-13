@@ -18,6 +18,7 @@ def guest_register_view(request):
     context = {"form":form}
 
     print("User logged in: %s" % request.user.is_authenticated)
+    print("guest register")
 
     next_ = request.GET.get('next')
     next_post = request.POST.get('next')
@@ -45,6 +46,7 @@ def login_page(request):
     context = {"form":form}
 
     print("User logged in: %s" % request.user.is_authenticated)
+    print("login_page")
 
     next_ = request.GET.get('next')
     next_post = request.POST.get('next')

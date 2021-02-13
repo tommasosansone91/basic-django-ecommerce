@@ -34,6 +34,8 @@ from django.contrib.auth.views import LogoutView
 
 from accounts.views import guest_register_view
 
+from addresses.views  import checkout_address_create_view
+
 # from products.views import (
 #     ProductListView, 
 #     product_list_view, 
@@ -80,6 +82,8 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(), name="logout"),
 
     path('register/guest/', guest_register_view, name="guest_register"),
+
+    path('checkout/address/create/', checkout_address_create_view, name='checkout_address_create_view'), 
     
 ]
 

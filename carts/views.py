@@ -20,6 +20,8 @@ from accounts.forms import GuestForm
 
 from accounts.models import GuestEmail
 
+from addresses.forms import AddressForm
+
 
 def cart_home(request):
 
@@ -62,6 +64,8 @@ def checkout_home(request):
 
     login_form = LoginForm()
     guest_form = GuestForm()
+    address_form = AddressForm()
+    billing_address_form = AddressForm()
 
     billing_profile = BillingProfile.objects.new_or_get(request)
 
@@ -74,7 +78,9 @@ def checkout_home(request):
         "object": order_obj,
         "billing_profile": billing_profile,
         "login_form": login_form,
-        "guest_form" : guest_form
+        "guest_form" : guest_form,
+        "address_form" : address_form,
+        "billing_address_form" : billing_address_form,
 
     }
 
