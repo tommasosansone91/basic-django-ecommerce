@@ -83,7 +83,7 @@ urlpatterns = [
 
     path('register/guest/', guest_register_view, name="guest_register"),
 
-    path('checkout/address/create/', checkout_address_create_view, name='checkout_address_create_view'), 
+    path('checkout/address/create/', checkout_address_create_view, name='checkout_address_create'), 
     
 ]
 

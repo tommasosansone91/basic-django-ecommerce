@@ -21,8 +21,16 @@ def guest_register_view(request):
     print("guest register")
 
     next_ = request.GET.get('next')
+    print("next_ = request.GET.get('next')")
+    print(next_)
+
     next_post = request.POST.get('next')
+    print("next_post = request.POST.get('next')")
+    print(next_post)
+
     redirect_path = next_ or next_post or None
+    print("redirect_path = next_ or next_post or None")
+    print(redirect_path)
 
     if form.is_valid():
         email = form.cleaned_data.get("email")

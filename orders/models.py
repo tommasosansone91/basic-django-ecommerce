@@ -9,6 +9,8 @@ import math
 
 from billing.models import BillingProfile
 
+from addresses.models import Address
+
 # Create your models here.
 
 ORDER_STATUS_CHOICES = (
@@ -18,6 +20,7 @@ ORDER_STATUS_CHOICES = (
     ('refunded', 'Refunded'),
 
 )
+
 
 
 class OrderManager(models.Manager):
@@ -38,13 +41,17 @@ class OrderManager(models.Manager):
                 cart=cart_obj)   
             created = True     
         return obj, created
+        
 
 class Order(models.Model):
     # corretto abbia piu foreign key
     billing_profile = models.ForeignKey(BillingProfile, null=True, blank=True, on_delete=models.CASCADE)
     order_id = models.CharField(max_length=120, blank=True)
-    # billing_profile = ?
-
+    
+    shipping_address = models.ForeignKey(Address, related_name="shipping_address", null=True, blank=True, on_delete=models.CASCADE)
+    billing_address = models.ForeignKey(Address, related_name="billing_address", null=True, blank=True, on_delete=models.CASCADE)
+     #visto che uso 2 foreign key associate llo stesso modello devo usare dei related name diversi per indicarle
+    
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     status = models.CharField(max_length=120, default='created', choices=ORDER_STATUS_CHOICES)
     shipping_total = models.DecimalField(default=5.99, max_digits=100, decimal_places=2)

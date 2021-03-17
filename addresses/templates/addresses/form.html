@@ -1,5 +1,5 @@
 
-<form method='POST' action='  {% if action_url %}    {{ action_url }}  {% else %}    {% url "login" %}  {% endif %}'>
+<form method='POST' action='{% if action_url %} {{ action_url }}  {% else %} {% url "login" %}  {% endif %}'>
 
     {% csrf_token %}
 

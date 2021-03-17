@@ -101,3 +101,10 @@ così no, anche se il tag è registrato
 
 se c'è corrispondenza di template e variabile e view, ma la variabile non è mostrata nel template,
 probabilmente è un problema di indentazione logica
+
+
+-
+-----------------
+
+
+blocco a 9.41 di associate addresses to orderr
