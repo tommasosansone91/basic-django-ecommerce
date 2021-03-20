@@ -35,6 +35,7 @@ from django.contrib.auth.views import LogoutView
 from accounts.views import guest_register_view
 
 from addresses.views  import checkout_address_create_view
+from addresses.views  import checkout_address_reuse_view
 
 # from products.views import (
 #     ProductListView, 
@@ -84,7 +85,9 @@ urlpatterns = [
     path('register/guest/', guest_register_view, name="guest_register"),
 
     path('checkout/address/create/', checkout_address_create_view, name='checkout_address_create'), 
-    
+
+    path('checkout/address/reuse/', checkout_address_reuse_view, name='checkout_address_reuse'), 
+
 ]
 
 # setup e serve local e media files - python ecomemrce

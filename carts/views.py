@@ -65,10 +65,17 @@ def checkout_home(request):
 
 
     billing_profile = BillingProfile.objects.new_or_get(request)
-
+    address_qs = None
 
     if billing_profile is not None:
         print("billing_profile exists")
+
+        if request.user.is_authenticated:
+        
+            address_qs = Address.objects.filter(billing_profile=billing_profile)
+            # shipping_address_qs = address_qs.filter(address_type="shipping")
+            # billing_address_qs = address_qs.filter(address_type="billing")
+
         order_obj, order_obj_created = Order.objects.new_or_get(billing_profile, cart_obj)
         
         if shipping_address_id:
@@ -105,6 +112,7 @@ def checkout_home(request):
         "login_form": login_form,
         "guest_form" : guest_form,
         "address_form" : address_form,
+        "address_qs":address_qs,
         
 
     }
