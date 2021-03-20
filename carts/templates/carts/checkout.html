@@ -84,9 +84,22 @@
 
         <h1>Finalize checkout</h1>
 
-        <p>Cart total: {{ object.cart.total }}</p>
-        <p>Shipping total: {{ object.shipping_total }}</p>
-        <p>Order total: {{ object.total }}</p>
+        <br>
+
+        <p><b>Cart Items:</b>             
+            
+            
+            {% for product in object.cart.products.all %}{{ product }}{% if not forloop.last %},{% endif %} {% endfor%}</p>
+        
+        
+        <p><b>Shipping address:</b> {{ object.shipping_address.get_address }}</p>
+        <p><b>Billing address:</b> {{ object.billing_address.get_address }}</p>
+        
+        <p><b>Cart total:</b> {{ object.cart.total }}</p>
+        <p><b>Shipping total:</b> {{ object.shipping_total }}</p>
+        <p><b>Order total:</b> {{ object.total }}</p>
+
+        <br>
 
         <form class="form" method="POST" action="">
             {% csrf_token %}
