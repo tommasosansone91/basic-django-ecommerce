@@ -108,3 +108,9 @@ probabilmente è un problema di indentazione logica
 
 
 blocco a 9.41 di associate addresses to orderr
+
+
+----------------
+
+
+source venv/bin/activate

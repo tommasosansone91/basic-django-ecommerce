@@ -5,6 +5,8 @@
 .env
 .github info.txt
 
+**/__pycache__/ 
+
 .essential_requirements.txt
 .Log_cose_fatte_python_ecommerce
 

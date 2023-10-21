@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from .forms import AddressForm
-from django.utils.http import is_safe_url
+from django.utils.http import url_has_allowed_host_and_scheme
 
 from billing.models import BillingProfile
 
@@ -49,7 +49,7 @@ def checkout_address_create_view(request):
             return redirect("cart:checkout")
 
         # redirect to success page
-        if is_safe_url(redirect_path, request.get_host()):
+        if url_has_allowed_host_and_scheme(redirect_path, request.get_host()):
             return redirect(redirect_path)
         
 
@@ -93,7 +93,7 @@ def checkout_address_reuse_view(request):
             
             # print(address_type +  "_address_id")
 
-            if is_safe_url(redirect_path, request.get_host()):
+            if url_has_allowed_host_and_scheme(redirect_path, request.get_host()):
                 return redirect(redirect_path)
 
     return redirect("cart:checkout")
