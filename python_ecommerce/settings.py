@@ -60,6 +60,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'python_ecommerce.middlewares.AjaxMiddleware',  
+    # this is a user defined middleware to recover the is_ajax function of request object 
+    # see https://stackoverflow.com/a/72762023/7658051
 ]
 
 
