@@ -36,7 +36,8 @@
 
           console.log("Form is not sending")
           var thisForm = $(this)
-          var actionEndpoint = thisForm.attr("action")
+          // var actionEndpoint = thisForm.attr("action")  // api endpoint
+          var actionEndpoint = thisForm.attr("data-endpoint") //
           var httpMethod = thisForm.attr("method");
           var formData = thisForm.serialize();
 
@@ -60,6 +61,8 @@
                   submitSpan.html("<button class='btn btn-success' type='submit'>Add to Cart</button>")
                 }                
                 console.log(submitSpan.html())
+                var navbarCount = $(".navbar-cart-count")
+                navbarCount.text(datacartItemCount)
               },
               error: function(errorData){
                 console.log("error")
@@ -69,6 +72,12 @@
           })
 
         })
+
+
+
+        }
+
+
       })
     </script>
 
