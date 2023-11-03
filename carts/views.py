@@ -19,6 +19,8 @@ from addresses.forms import AddressForm
 
 from addresses.models import Address
 
+from django.http import JsonResponse
+
 
 def cart_home(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request)
@@ -42,10 +44,25 @@ def cart_update(request):
     
         if product_obj in cart_obj.products.all():
             cart_obj.products.remove(product_obj)
+            added = False
         else:
             cart_obj.products.add(product_obj)
+            added = True
         
         request.session['cart_items'] = cart_obj.products.count()
+
+    if request.is_ajax(): # asinchronous javascript and xml
+        print("Ajax request")
+        # se la richiesta è ajax, devo ritornare dati usando il formato ajax -> jsonresponse
+        # quindi lo aggiungo usando jsonresoonse
+        dict_to_json = {
+            "added": added,
+            "removed": not added, # sto aggiungendo l'opposto,
+        }
+        
+        json_response = JsonResponse(dict_to_json)
+
+        return json_response
 
     return redirect("cart:home")
 
