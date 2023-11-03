@@ -114,3 +114,12 @@ blocco a 9.41 di associate addresses to orderr
 
 
 source venv/bin/activate
+
+
+venv_r_path=$(find */bin/ -name "activate")
+venv_r_path=$(find */bin/ -name "activate")
+
+
+ho gestito il fatto che hanno rimosso la funzione is_ajax da request in questo modo:
+
+https://stackoverflow.com/questions/70419441/attributeerror-wsgirequest-object-has-no-attribute-is-ajax
