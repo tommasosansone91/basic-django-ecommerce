@@ -25,5 +25,54 @@
 
 
   {% include 'base/js.html' %}
+
+
+    <script>
+      $(document).ready(function(){
+        var productForm = $(".form-product-ajax")
+        
+        productForm.submit(function(event){
+          event.preventDefault();
+
+          console.log("Form is not sending")
+          var thisForm = $(this)
+          var actionEndpoint = thisForm.attr("action")
+          var httpMethod = thisForm.attr("method");
+          var formData = thisForm.serialize();
+
+          console.log(thisForm.attr("action"), thisForm.attr("method"))
+
+          // instead of running a simple sincronous request, we run an asinchronous via ajax
+          $.ajax({
+              url: actionEndpoint,  
+              // usiamo un action endpoint e non un api endpoint perhcè vogliamo essere sicuri che il sito funziona anche se l'utente disabilita javascript
+              method: httpMethod,
+              data: formData,
+              success: function(data){
+                console.log("yay!")
+                console.log(data)
+                console.log("added: ", data.added)
+                console.log("removed: ", data.removed)
+                var submitSpan = thisForm.find(".submit-span")
+                if (data.added){
+                  submitSpan.html("In cart<button type='submit' class='btn btn-link'>Remove</button>") 
+                } else {
+                  submitSpan.html("<button class='btn btn-success' type='submit'>Add to Cart</button>")
+                }                
+                console.log(submitSpan.html())
+              },
+              error: function(errorData){
+                console.log("error")
+                console.log(errorData)
+              }
+
+          })
+
+        })
+      })
+    </script>
+
+
+
     </body>
 </html>
