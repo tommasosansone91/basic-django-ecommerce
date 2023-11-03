@@ -1,6 +1,8 @@
 <!-- aliases url -->
 <!-- salvo in una variabile l'url che mi manda a una apgina -->
 
+{% load static %}
+
 {% url 'home' as home_url %}
 {% url 'contact' as contact_url %}
 {% url 'products:list' as products_list_url %}
@@ -16,7 +18,7 @@
   <div class='container'>
 
     <a class="navbar-brand" href="{{ home_url }}"></a>
-    <img src="bootstrap-image-url" width="30" height="30" class="d-inline-block align-top" alt="">
+    <img src="{% static 'img/bootstrap.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
     
     {% if brand_name %} {{ brand_name}} {% else %} complete eCommerce brane name {% endif %}
     </a>
@@ -37,7 +39,7 @@
           </li>
 
           <li class="nav-item {% if request.path == cart_url %}active{% endif %}">
-            <a class="nav-link" href="{% url 'carts:home' %}"><i class="fas fa-shopping-cart"></i> {{ request.session.cart_items }}</a>
+            <!-- <a class="nav-link" href="{% url 'carts:home' %}"><span class='navbar-cart-count'>{{ request.session.cart_items }}</span><i class="fas fa-shopping-cart" aria-hidden="true"></i></a> -->
           </li>
 
           {% if not request.user.is_authenticated %}
