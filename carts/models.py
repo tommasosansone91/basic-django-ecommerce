@@ -27,6 +27,7 @@ class CartManager(models.Manager):
             # print('Cart ID exists')
             cart_obj = qs.first()
 
+            # assign the session user to cart.user
             if request.user.is_authenticated and cart_obj.user is None:
                 cart_obj.user = request.user
                 cart_obj.save()
