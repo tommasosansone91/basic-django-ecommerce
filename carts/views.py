@@ -58,6 +58,7 @@ def cart_update(request):
         dict_to_json = {
             "added": added,
             "removed": not added, # sto aggiungendo l'opposto,
+            "cartItemCount": cart_obj.products.count()  # camelcase perche diventa la key di un json
         }
         
         json_response = JsonResponse(dict_to_json)

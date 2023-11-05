@@ -34,10 +34,10 @@
         productForm.submit(function(event){
           event.preventDefault();
 
-          console.log("Form is not sending")
+          // console.log("Form is not sending")
           var thisForm = $(this)
           // var actionEndpoint = thisForm.attr("action")  // api endpoint
-          var actionEndpoint = thisForm.attr("data-endpoint") //
+          var actionEndpoint = thisForm.attr("action") //
           var httpMethod = thisForm.attr("method");
           var formData = thisForm.serialize();
 
@@ -57,12 +57,19 @@
                 var submitSpan = thisForm.find(".submit-span")
                 if (data.added){
                   submitSpan.html("In cart<button type='submit' class='btn btn-link'>Remove</button>") 
+                  // console.log(submitSpan.html())
                 } else {
                   submitSpan.html("<button class='btn btn-success' type='submit'>Add to Cart</button>")
+                  // console.log(submitSpan.html())
                 }                
-                console.log(submitSpan.html())
+                
                 var navbarCount = $(".navbar-cart-count")
-                navbarCount.text(datacartItemCount)
+                navbarCount.text(data.cartItemCount)
+                var currentPath = window.location.href
+
+                if (currentPath.indexOf("cart") != -1) {
+                  refreshCart()
+                }
               },
               error: function(errorData){
                 console.log("error")
@@ -73,7 +80,28 @@
 
         })
 
+        function refreshCart(){
+          console.log("in current cart")
+          var cartTable = $(".cart-table")
+          var cartBody = cartTable.find(".cart-body")
+          cartBody.html("<h1>Changed</h1>")
 
+          var refreshCartUrl = '/api/cart/';
+          var refreshCartMethod = "GET";
+          var data = {};
+          $.ajax({
+            url: refreshCartUrl,
+            method: refreshCartMethod,
+            data: data,
+            success: function(data){
+              console.log("success refreshCart")
+            },
+            error: function(errorData){
+              console.log("error refreshCart")
+              console.log(errorData)
+            },
+
+          })
 
         }
 
