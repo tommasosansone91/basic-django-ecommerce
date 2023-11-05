@@ -2,7 +2,7 @@ from django.db import models
 
 from carts.models import Cart
 
-from python_ecommerce.utils import unique_order_id_generator
+from mainapp_ecommerce.utils import unique_order_id_generator
 from django.db.models.signals import pre_save, post_save
 
 import math

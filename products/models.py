@@ -4,7 +4,7 @@ from django.db import models
 import os
 
 from django.db.models.signals import pre_save, post_save
-from python_ecommerce.utils import unique_slug_generator
+from mainapp_ecommerce.utils import unique_slug_generator
 
 from django.urls import reverse
 
