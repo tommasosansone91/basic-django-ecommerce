@@ -22,6 +22,33 @@ from addresses.models import Address
 from django.http import JsonResponse
 
 
+def cart_detail_api_view(request):
+    cart_obj, new_obj = Cart.objects.new_or_get(request)
+    # products = cart_obj.products.all()  # list of objects
+
+    # se ritorno un dizionario dalla vista, django permette di richiamare i suoi elementi con il django tag nei template
+    # se ritorno una json response, devo cambiare il modo in cui il dato è richiamato nel template
+
+    # this is data serialization: data are transformed in a format which is recognizable by the response
+    products = [
+        {
+            "name": x.name,
+            "price": x.price,            
+        }
+        for x in cart_obj.products.all()
+    ]
+
+    # dict_for_jsonresponse
+    cart_data = {
+            "products": products,
+            "subtotal": cart_obj.subtotal,
+            "total": cart_obj.total
+
+        }
+
+    return JsonResponse(cart_data)
+
+
 def cart_home(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request)
     return render(request, "carts/home.html", {"cart":cart_obj} )
@@ -55,13 +82,13 @@ def cart_update(request):
         print("Ajax request")
         # se la richiesta è ajax, devo ritornare dati usando il formato ajax -> jsonresponse
         # quindi lo aggiungo usando jsonresoonse
-        dict_to_json = {
+        dict_for_jsonresponse = {
             "added": added,
             "removed": not added, # sto aggiungendo l'opposto,
             "cartItemCount": cart_obj.products.count()  # camelcase perche diventa la key di un json
         }
         
-        json_response = JsonResponse(dict_to_json)
+        json_response = JsonResponse(dict_for_jsonresponse)
 
         return json_response
 

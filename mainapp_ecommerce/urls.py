@@ -37,6 +37,8 @@ from accounts.views import guest_register_view
 from addresses.views  import checkout_address_create_view
 from addresses.views  import checkout_address_reuse_view
 
+from carts.views import cart_detail_api_view
+
 # from products.views import (
 #     ProductListView, 
 #     product_list_view, 
@@ -77,6 +79,8 @@ urlpatterns = [
 
     # path('cart/', cart_home, name="cart"),
     path('cart/', include("carts.urls", namespace="cart")),
+
+    path('api/cart/', cart_detail_api_view, name="api-cart"),
 
     # path('', include("carts.urls", namespace='carts')),
 
