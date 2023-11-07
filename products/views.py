@@ -37,14 +37,17 @@ class ProductListView(ListView):
     # queryset = Product.objects.all() #ci deve essere
     template_name = "products/list.html" #ci deve essere
 
-
-
     # def get_context_data(self, *args, **kwargs):
     #     context = super(ProductListView, self).get_context_data(*args, **kwargs)
     #     print(context)
     #     return context
 
-
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProductListView, self).get_context_data(*args, **kwargs)
+        request = self.request
+        cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+        context['cart'] = cart_obj
+        return context
 
     def get_queryset(self, *args, **kwargs):
         request = self.request

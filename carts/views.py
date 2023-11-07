@@ -32,8 +32,10 @@ def cart_detail_api_view(request):
     # this is data serialization: data are transformed in a format which is recognizable by the response
     products = [
         {
-            "name": x.name,
-            "price": x.price,            
+            "id":       x.id,
+            "url":      x.get_absolute_url(),
+            "name":     x.name,
+            "price":    x.price,            
         }
         for x in cart_obj.products.all()
     ]
