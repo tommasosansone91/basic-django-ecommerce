@@ -1,4 +1,5 @@
-<form method='GET' action='{% url "search:query" %}'' class="form my-2 my-lg-0">
+<form method='GET' action='{% url "search:query" %}'' class="form my-2 my-lg-0 search-form">
+    <!-- do la classe search form per poterla richiamare con ajax e jquery -->
     <div class="input-group">
         <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="q" value='{{request.GET.q}}'>
         <!-- name da il nome alla variabile che viene cercata dalla view con request.GET.get('q') -->

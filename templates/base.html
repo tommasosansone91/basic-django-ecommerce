@@ -29,6 +29,46 @@
 
     <script>
       $(document).ready(function(){
+
+        // autosearch
+        var searchForm = $(".search-form")
+        var searchInput = searchForm.find("[name='q']") /* questo mi permette di ottenere l'imput immesso nl form */
+        var typingTimer;
+        var typingInterval = 1500 // milli seconds
+        var searchBtn = searchForm.find("[type='submit']")
+
+        searchInput.keyup(function(event){  // when the key is released
+          // console.log(event)
+          // console.log(searchInput.val())
+
+          clearTimeout(typingTimer) // clear timeout whenever a key comes up - altrimenti inizia a contare sempre dalla prima
+          typingTimer = setTimeout(performSearch, typingInterval)
+
+          })
+
+
+        searchInput.keydown(function(event){  // when the key is down
+          clearTimeout(typingTimer)
+          })
+
+        
+        function displaySearch(){
+            searchBtn.addClass("disabled")
+            searchBtn.html("<i class='fa fa-span fa-spinner'></i> Autosearch...")
+          }
+
+
+        function performSearch(){
+          displaySearch()
+          var query = searchInput.val()
+          setTimeout(function(){
+            window.location.href='/search/?q=' + query
+          }, 1000)
+          
+        }
+
+
+        // cart + add products
         var productForm = $(".form-product-ajax")
         
         productForm.submit(function(event){
