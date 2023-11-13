@@ -112,6 +112,15 @@
                 }
               },
               error: function(errorData){
+                // dollar sign davanti ad alert serve ad attivare jquery-confirm
+                // alert("an error occurred!!")
+                // $.alert("an error occurred!!")
+                $.alert({
+                  title: "Error!",
+                  content: "an error occurred!!",
+                  theme: "modern",
+                })
+
                 console.log("error")
                 console.log(errorData)
               }
@@ -166,6 +175,14 @@
 
             },
             error: function(errorData){
+
+              // i can place it everywhere I have an error of ajax
+              $.alert({
+                  title: "Error!",
+                  content: "an error occurred!!",
+                  theme: "modern",
+                })
+
               console.log("error refreshCart")
               console.log(errorData)
             },

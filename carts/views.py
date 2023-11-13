@@ -92,7 +92,8 @@ def cart_update(request):
         
         json_response = JsonResponse(dict_for_jsonresponse)
 
-        return json_response
+        # return JsonResponse({"message": "OHNOOO error 400"}, status=400)  # PROVA ERRORE
+        return json_response  # ok
 
     return redirect("cart:home")
 

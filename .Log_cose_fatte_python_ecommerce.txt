@@ -123,3 +123,25 @@ venv_r_path=$(find */bin/ -name "activate")
 ho gestito il fatto che hanno rimosso la funzione is_ajax da request in questo modo:
 
 https://stackoverflow.com/questions/70419441/attributeerror-wsgirequest-object-has-no-attribute-is-ajax
+
+
+le ajax request sono per fare le cose in modod asicrono e in python le views devo intercettare il fatto che sono asincrone e non sincrone
+
+ if request.is_ajax(): # asinchronous javascript and xml
+        print("Ajax request")
+        # se la richiesta è ajax, devo ritornare dati usando il formato ajax -> jsonresponse
+        # quindi lo aggiungo usando jsonresoonse
+        dict_for_jsonresponse = {
+            "added": added,
+            "removed": not added, # sto aggiungendo l'opposto,
+            "cartItemCount": cart_obj.products.count()  # camelcase perche diventa la key di un json
+        }
+        
+        json_response = JsonResponse(dict_for_jsonresponse)
+
+        return json_response  # ok
+
+    return redirect("cart:home")
+
+
+jquery confirm per sistmare e gestireg li errore
