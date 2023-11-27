@@ -30,6 +30,50 @@
     <script>
       $(document).ready(function(){
 
+        console.log("readyyyy")
+        // contact form habdrler
+        var contactForm = $(".contact-form")
+        var contactFormMethod = contactForm.attr("method")
+        var contactFormEndpoint = contactForm.attr("action")  /* questo lo prende da dove ho scritto action nella view dei contatti */
+        
+        console.log("before submit")
+
+        contactForm.submit(function(event){
+          console.log("entro submit")
+          event.preventDefault()  /* quest mi serve a prevenire che lancio il submit premendo invio */
+          var contactFormData = contactForm.serialize()
+          console.log("serializzazione ok")
+          var thisForm = $(this)
+          
+          $.ajax({
+
+            method: contactFormMethod,
+            url: contactFormEndpoint,
+            data: contactFormData,
+
+            success: function(data){
+              thisForm[0].reset()  /* empty the form */
+              $.alert({
+                title: "success!",
+                content: "thank you a lot!",
+                theme: "modern",
+              })              
+            }, /* success chiudo */
+
+            error: function(error){
+              console.log(error)
+              $.alert({
+                title: "oops",
+                content: "an error occurred",
+                theme: "modern",
+              })
+            }, /* chiudo error */
+
+          }) /* chiudo ajax  */
+
+
+        }) /* chuso contactofrm submint */
+
         // autosearch
         var searchForm = $(".search-form")
         var searchInput = searchForm.find("[name='q']") /* questo mi permette di ottenere l'imput immesso nl form */

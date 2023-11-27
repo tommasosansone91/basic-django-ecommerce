@@ -28,27 +28,34 @@
 
   <div class='container'>
   <div class='row'>
-    <div class='col'>
-      <p>{{ content }}</p>
+    <div class='col'>      
 
-      <!-- <div class='col-sm-6 col-12'>
-      <form method='POST'>
-        {% csrf_token %}
-        <input type='text' class='form-control' placeholder="Name" name='fullname'>
-        <input type='email' class='form-control' placeholder="Email" name='email'>
-        <input type='content' class='form-control' placeholder="Your content..." name='content'>
-        <button type='submit' class="btn btn-primary">Submit</button>
-      </form> -->
+      <div class='col-sm-6 col-12 mx-auto'>  <!-- mx auto lo manda nel mezzo -->
 
-      <form method='POST'>
-        {% csrf_token %}
-        {{ form }}
-        <br>
-        <button type='submit' class="btn btn-primary">Submit</button>
-      </form>
+        <p>{{ content }}</p>
+
+        <!-- <div class='col-sm-6 col-12'>
+        <form method='POST'>
+          {% csrf_token %}
+          <input type='text' class='form-control' placeholder="Name" name='fullname'>
+          <input type='email' class='form-control' placeholder="Email" name='email'>
+          <input type='content' class='form-control' placeholder="Your content..." name='content'>
+          <button type='submit' class="btn btn-primary">Submit</button>
+        </form> -->
+
+        <form class='contact-form' method='POST' action='{% url "contact" %}'>  
+          <!-- questo token url mi serve per usare jquery,per essere sicuri che lo mando nel posto giusto. l'url lo prendo dalle views -->
+          <!--  il selector della classe lo uso x jquery -->
+          {% csrf_token %}
+          {{ form.as_p }}
+          <br>
+          <button type='submit' class="btn btn-primary">Submit</button>
+        </form>
 
       </div>
+
     </div>
+
   </div>
   </div>
 

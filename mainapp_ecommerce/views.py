@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-
+from django.http import JsonResponse
 
 from .forms import ContactForm
 
@@ -37,18 +37,43 @@ def contact_page(request):
     context = {
     "title":"Contact",
     "content":"Welcome to the contact page!",
-    "form":contact_form,
-    "brand":"new brand name,"
+    "form": contact_form,
+    "brand":"new brand name",
     }
 
     if contact_form.is_valid():
-        print(contact_form.cleaned_data)
-
+        print("contact_form.cleaned_data", contact_form.cleaned_data)
+        
+        if request.is_ajax(): # asinchronous javascript and xml
+            print("Ajax request")
+        
+            # se la richiesta è ajax, devo ritornare dati usando il formato ajax -> jsonresponse
+            # quindi lo aggiungo usando jsonresoonse
+            dict_for_jsonresponse = {
+                "message": "thanks!!"
+            }
+            return JsonResponse(dict_for_jsonresponse)
+        
     # if request.method == "POST":
     #     print(request.POST)
     #     print(request.POST.get('fullname'))
     #     print(request.POST.get('email'))
-    #     print(request.POST.get('content'))       
+    #     print(request.POST.get('content'))  
+    # 
+        else:
+            print("no ajax in this request:", request) 
+
+    if contact_form.errors:
+        print(contact_form.cleaned_data)
+        errors = contact_form.as_json()
+        if request.is_ajax():
+            return HttpResponse(errors, stauts=400, content_type='application/json')
+            """ 
+            NOTA:
+            JsonResponse trasforma in json i dizionari python e poi fa la response,
+            se l'oggetto che passo alla response è un json, allora posso usare direttamente la httpresponse,
+            però devo anche indicare il conent-type come content_type='application/json'
+            """
 
     return render(request, "contact/view.html", context )
 
