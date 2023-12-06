@@ -65,9 +65,10 @@ def contact_page(request):
 
     if contact_form.errors:
         print(contact_form.cleaned_data)
-        errors = contact_form.as_json()
+        errors = contact_form.errors.as_json()
+
         if request.is_ajax():
-            return HttpResponse(errors, stauts=400, content_type='application/json')
+            return HttpResponse(errors, status=400, content_type='application/json')
             """ 
             NOTA:
             JsonResponse trasforma in json i dizionari python e poi fa la response,

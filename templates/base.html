@@ -36,14 +36,36 @@
         var contactFormMethod = contactForm.attr("method")
         var contactFormEndpoint = contactForm.attr("action")  /* questo lo prende da dove ho scritto action nella view dei contatti */
         
+
+        function displaySubmitting(submitBtn, defaultText, doSubmit){
+
+          if (doSubmit){
+            submitBtn.addClass("disabled")
+            submitBtn.html("<i class='fa fa-span fa-spinner'></i> Sending...")
+          } else {
+            submitBtn.removeClass("disabled")
+            submitBtn.html(defaultText)
+          }
+
+        }
+
+
         console.log("before submit")
 
         contactForm.submit(function(event){
-          console.log("entro submit")
           event.preventDefault()  /* quest mi serve a prevenire che lancio il submit premendo invio */
+          
+
+          var ContactFormSubmitBtn = contactForm.find("[type='submit']")
+          var ContactFormSubmitBtnTxt = ContactFormSubmitBtn.text()
+
+          console.log("entro submit")
+          
           var contactFormData = contactForm.serialize()
           console.log("serializzazione ok")
           var thisForm = $(this)
+
+          displaySubmitting(ContactFormSubmitBtn, "", true)
           
           $.ajax({
 
@@ -52,21 +74,39 @@
             data: contactFormData,
 
             success: function(data){
-              thisForm[0].reset()  /* empty the form */
+              contactForm[0].reset()  /* empty the form */
               $.alert({
                 title: "success!",
-                content: "thank you a lot!",
+                content: data.message,
                 theme: "modern",
-              })              
+              })
+
+              setTimeout(function(){
+                displaySubmitting(ContactFormSubmitBtn, ContactFormSubmitBtnTxt, false)
+              }, 500)
+
             }, /* success chiudo */
 
             error: function(error){
-              console.log(error)
+              console.log(error.responseJSON)
+              var jsonData = error.responseJSON
+              var msg = ""
+
+              $.each(jsonData, function(key, value){
+                msg += key + ": " + value[0].message + "<br/>"
+              })
+
               $.alert({
                 title: "oops",
-                content: "an error occurred",
+                content: msg,
                 theme: "modern",
               })
+
+              setTimeout(function(){
+                displaySubmitting(ContactFormSubmitBtn, ContactFormSubmitBtnTxt, false)
+              }, 500)
+
+
             }, /* chiudo error */
 
           }) /* chiudo ajax  */

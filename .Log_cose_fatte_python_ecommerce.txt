@@ -148,3 +148,7 @@ jquery confirm per sistmare e gestireg li errore
 
 la 113
 sono arrivato al 7.23 del 
+
+
+https://github.com/codingforentrepreneurs/eCommerce
+https://github.com/codingforentrepreneurs/eCommerce/tree/master/src
