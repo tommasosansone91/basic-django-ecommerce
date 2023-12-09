@@ -8,15 +8,18 @@ from django.contrib.auth.models import (
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, email, password=None, is_active=True, is_staff=False, is_admin=False):  # only required fileds are put as input here
+    def create_user(self, email, full_name, password=None, is_active=True, is_staff=False, is_admin=False):  # only required fileds are put as input here
         
         if not email:
             raise ValueError("Users must have an email address")  # indicatd y the docs
         if not password:
             raise ValueError("Users must have a password")  # indicatd y the docs
+        if not full_name:
+            raise ValueError("Users must have a full name") 
         
         user_obj = self.model(
-            email = self.normalize_email(email)
+            email = self.normalize_email(email),
+            full_name = full_name
         )
 
         user_obj.set_password(password)  # setter per passwod
@@ -29,17 +32,19 @@ class UserManager(BaseUserManager):
     
     # metodi per definire tpi di utente "predefiniti", con attributi uguale ad un valore prefissato
     
-    def create_staffuser(self, email, password=None):
+    def create_staffuser(self, email, full_name, password=None):
         user = self.create_user(
             email,
+            full_name,
             password = password,
             is_staff = True
         )
         return user
     
-    def create_superuser(self, email, password=None):
+    def create_superuser(self, email, full_name, password=None):
         user = self.create_user(
             email,
+            full_name,
             password = password,
             is_staff = True,
             is_admin = True
@@ -48,7 +53,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True)
-    # full_name = models.CharField(max_length=255, blank=True, null=True)
+    full_name = models.CharField(max_length=255, blank=True, null=True)
     active = models.BooleanField(default=True)  # is h* allowed to login?
     staff = models.BooleanField(default=False) # staff user, not superuser
     admin = models.BooleanField(default=False) # superuser
@@ -58,7 +63,7 @@ class User(AbstractBaseUser):
 
     # email and password are required
 
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['full_name']
 
     objects = UserManager()
 
