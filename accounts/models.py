@@ -7,6 +7,7 @@ from django.contrib.auth.models import (
 
 
 class UserManager(BaseUserManager):
+
     def create_user(self, email, password=None, is_active=True, is_staff=False, is_admin=False):  # only required fileds are put as input here
         
         if not email:
@@ -18,7 +19,7 @@ class UserManager(BaseUserManager):
             email = self.normalize_email(email)
         )
 
-        user_obj.set_passsword(password)  # setter per passwod
+        user_obj.set_password(password)  # setter per passwod
         user_obj.staff = is_staff
         user_obj.admin = is_admin
         user_obj.active = is_active
@@ -52,13 +53,13 @@ class User(AbstractBaseUser):
     admin = models.BooleanField(default=False) # superuser
     timestamp = models.DateTimeField(auto_now_add=True) # superuser
 
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = 'email'
 
     # email and password are required
 
     REQUIRED_FIELDS = []
 
-    objects = UserManager
+    objects = UserManager()
 
     def __str__(self):
         return self.email
@@ -81,8 +82,8 @@ class User(AbstractBaseUser):
     def is_active(self):
         return self.active
 
-class Profile(models.model):
-    user = models.OneToOneField(User)
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     # extend extra data
 
 

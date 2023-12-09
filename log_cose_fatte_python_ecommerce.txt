@@ -172,3 +172,14 @@ e ricorrda che ho definito
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "static_root")
 
+
+-------------------------
+
+lez 121
+
+Email: tommaso91@dev.it
+Password: password
+Password (again): 
+This password is too common.
+Bypass password validation and create user anyway? [y/N]: y
+Superuser created successfully.
