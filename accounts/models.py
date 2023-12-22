@@ -8,7 +8,7 @@ from django.contrib.auth.models import (
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, email, full_name, password=None, is_active=True, is_staff=False, is_admin=False):  # only required fileds are put as input here
+    def create_user(self, email, full_name=None, password=None, is_active=True, is_staff=False, is_admin=False):  # only required fileds are put as input here
         
         if not email:
             raise ValueError("Users must have an email address")  # indicatd y the docs
@@ -20,7 +20,7 @@ class UserManager(BaseUserManager):
         user_obj = self.model(
             email = self.normalize_email(email),
             full_name = full_name
-        )
+        ) # these are required fileds
 
         user_obj.set_password(password)  # setter per passwod
         user_obj.staff = is_staff
@@ -32,19 +32,19 @@ class UserManager(BaseUserManager):
     
     # metodi per definire tpi di utente "predefiniti", con attributi uguale ad un valore prefissato
     
-    def create_staffuser(self, email, full_name, password=None):
+    def create_staffuser(self, email, full_name=None, password=None):
         user = self.create_user(
             email,
-            full_name,
+            full_name = full_name,
             password = password,
             is_staff = True
         )
         return user
     
-    def create_superuser(self, email, full_name, password=None):
+    def create_superuser(self, email, full_name=None, password=None):
         user = self.create_user(
             email,
-            full_name,
+            full_name = full_name,
             password = password,
             is_staff = True,
             is_admin = True
@@ -61,9 +61,10 @@ class User(AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
 
-    # email and password are required
+    # email and password are required BY DEFAULT
 
-    REQUIRED_FIELDS = ['full_name']
+    # REQUIRED_FIELDS = ['full_name']  
+    REQUIRED_FIELDS = []  # così non riesco a creare un nuov utente da manage.py, ma posso farlo da admin section
 
     objects = UserManager()
 
@@ -71,6 +72,8 @@ class User(AbstractBaseUser):
         return self.email
 
     def get_full_name(self):
+        if self.full_name:
+            return self.full_name
         return self.email
     
     def get_short_name(self):
