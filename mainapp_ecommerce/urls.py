@@ -28,7 +28,7 @@ from django.views.generic.base import TemplateView
 
 from carts.views import cart_home
 
-from accounts.views import login_page, register_page
+# from accounts.views import login_page #   this is now substituted by Login View   , register_page  # substituted by RegsigterView
 
 from django.contrib.auth.views import LogoutView
 
@@ -38,6 +38,9 @@ from addresses.views  import checkout_address_create_view
 from addresses.views  import checkout_address_reuse_view
 
 from carts.views import cart_detail_api_view
+
+from accounts.views import RegisterView
+from accounts.views import LoginView
 
 # from products.views import (
 #     ProductListView, 
@@ -56,8 +59,10 @@ urlpatterns = [
     path('', home_page, name="home"),
     path('about/', about_page, name="about"),
     path('contact/', contact_page, name="contact"),
-    path('login/', login_page, name="login"),
-    path('register/', register_page, name="register"),
+    # path('login/', login_page, name="login"),
+    path('login/', LoginView.as_view(), name="login"),
+    # path('register/', register_page, name="register"),
+    path('register/', RegisterView.as_view(), name="register"),
     path('bootstrap/', TemplateView.as_view(template_name='bootstrap/example.html')),
 
     path('', include("products.urls", namespace='products')), #spostato nell altro urls
