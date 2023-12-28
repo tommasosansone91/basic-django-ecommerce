@@ -5,6 +5,9 @@ from django.contrib.contenttypes.models import ContentType
 
 from django.conf import settings
 
+from .signals import object_viewed_signal
+from .utils import get_client_ip
+
 
 # Create your models here.
 
@@ -33,3 +36,21 @@ class ObjectViewed(models.Model):
         ordering = ['-timestamp']
         verbose_name = 'Object viewed'
         verbose_name_plural = 'Objects viewed'
+
+
+# defining a receiver function
+def object_viewed_receiver(sender, instance, request, *args, **kwarg):
+    c_type = ContentType.objects.get_for_model(sender)  # instance.__class__
+    print(sender)
+    print(instance)
+    print(request)
+    print(request.user)
+
+    new_view_obj = ObjectViewed.objects.create(
+        user = request.user,
+        content_type = c_type,
+        object_id = instance.id,
+        ip_address = get_client_ip(request)
+    )
+
+object_viewed_signal.connect(object_viewed_receiver)
