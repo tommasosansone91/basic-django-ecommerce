@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'accounts',
     'billing',
     'addresses',
+    'analytics',
 
     # django apps
     'django.contrib.admin',
