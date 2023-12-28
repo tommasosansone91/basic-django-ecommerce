@@ -5,11 +5,12 @@ from django.views.generic.detail import DetailView
 
 from .models import Product
 
-
 from django.http import Http404
 
-
 from carts.models import Cart
+
+# from analytics.signals import object_viewed_signal
+from analytics.mixins import ObjectViewMixin  # to be put in every detail view I want to get the analytics data
 
 # Create your views here.
 
@@ -23,7 +24,7 @@ class ProductFeaturedListView(ListView):
         return Product.objects.all().featured()
 
 
-class ProductFeaturedDetailView(DetailView):
+class ProductFeaturedDetailView(ObjectViewMixin, DetailView):
     queryset = Product.objects.all().featured() #ci deve essere
     template_name = "products/fetured-detail.html" #ci deve essere
 
@@ -66,7 +67,7 @@ def product_list_view(request):
     
 # detail view
 
-class ProductDetailView(DetailView):
+class ProductDetailView(ObjectViewMixin, DetailView):
     # queryset = Product.objects.all() #ci deve essere
     template_name = "products/detail.html" #ci deve essere
 
@@ -96,7 +97,7 @@ class ProductDetailView(DetailView):
     #     pk = self.kwargs.get('pk')
     #     return Product.objects.filter(pk=pk)
 
-class ProductDetailSlugView(DetailView):
+class ProductDetailSlugView(ObjectViewMixin, DetailView):
     queryset = Product.objects.all() #ci deve essere
     template_name = "products/detail.html" #ci deve essere
 
@@ -124,6 +125,11 @@ class ProductDetailSlugView(DetailView):
 
         except:
             raise Http404("Uhmmm")
+        
+        # object_viewed_signal.send(instance.__class__, instance=instance, request=request)
+        # il sender è la classe di quell'oggetto, e l'oggetto è il prodotto
+        # quindi il sende è il modello, e il modello è Product
+        # lo commento perchè voglio una class view mixing custom
          
         return instance    
 
