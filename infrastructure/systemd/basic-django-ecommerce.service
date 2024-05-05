@@ -41,7 +41,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/var/www/basic-django-ecommerce/
-ExecStart=/var/www/basic-django-ecommerce/venv/bin/gunicorn mainapp_ecommerce.wsgi:application --bind localhost:8002
+ExecStart=/var/www/basic-django-ecommerce/venv/bin/gunicorn infrastructure/wsgi/mainapp_ecommerce.wsgi:application --bind localhost:8002
 
 StandardOutput=file:/var/log/basic-django-ecommerce/basic-django-ecommerce-stdout.log
 StandardError=file:/var/log/basic-django-ecommerce/basic-django-ecommerce-stderr.log
