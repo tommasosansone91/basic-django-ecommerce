@@ -404,7 +404,7 @@ manually launch the app
     source venv/bin/activate
 
     python manage.py runserver 0.0.0.0:8002
-    
+
 By using the browser of any other device (other than the RPi) connected to the LAN network,<br>
 connect via browser to both IP addresses
 
@@ -439,6 +439,27 @@ In other words, it is a web server designed to run Python web applications that 
     source venv/bin/activate
 
     pip install gunicorn
+
+
+### check you have Procfile and wsgi
+
+Gunicorn requires that you have n your project root the files `Procfile`
+
+    web: gunicorn basic-django-ecommerce.wsgi
+
+and `basic-django-ecommerce.wsgi`
+
+    # this file must be given in input to gunicorn, 
+    # and it is better that remains in root directory of the application.
+
+    import os
+    from django.core.wsgi import get_wsgi_application
+
+    # environment settings for Django app
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'basic-django-ecommerce.settings')
+
+    # Initialize app Django
+    application = get_wsgi_application()
 
 
 ### run the app manually via gunicorn
