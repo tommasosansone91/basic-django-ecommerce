@@ -270,10 +270,6 @@ ativate and deactivate the virtual environment only for testing
 
 safe install `psycopg2` before massively installing all the other python modules
 
-    sudo apt-get install python-psycopg2
-
-**only if it does not work**, run
-
     pip install psycopg2-binary
 
 **only if it does not work again**, run
@@ -287,6 +283,16 @@ Once `psycopg2` is installed, launch the massive safe installation of required p
 for every package which raises problems, open the file `requirements.txt`, look up for the line including that module and remove the string `==X.X.X`, then run again the same command
 
     cat requirements.txt | xargs -n 1 pip install
+
+## Safe install of pillow
+
+safe install `pillow` before massively installing all the other python modules
+
+    sudo apt-get install libjpeg-dev zlib1g-dev
+    pip3 install Pillow
+    sudo pip install -U setuptools
+
+this is valid only for this project
 
 ## Create the app tables in postgresql via python
 
