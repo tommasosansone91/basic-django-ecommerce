@@ -583,8 +583,8 @@ make the file executable
 
 Create the symbolic links
 
-    ln -s /var/www/infrastructure/systemd/basic-django-ecommerce.service /etc/systemd/system/
-    ln -s /var/www/infrastructure/systemd/basic-django-ecommerce.service /etc/systemd/system/multi-user.target.wants/
+    ln -s /var/www/basic-django-ecommerce/infrastructure/systemd/basic-django-ecommerce.service /etc/systemd/system/
+    ln -s /var/www/basic-django-ecommerce/infrastructure/systemd/basic-django-ecommerce.service /etc/systemd/system/multi-user.target.wants/
 
 Check that the symbolic link is right, run
 
