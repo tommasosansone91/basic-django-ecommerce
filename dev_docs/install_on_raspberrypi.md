@@ -441,13 +441,9 @@ In other words, it is a web server designed to run Python web applications that 
     pip install gunicorn
 
 
-### check you have Procfile and wsgi
+### check you have wsgi file
 
-Gunicorn requires that you have n your project root the files `Procfile`
-
-    web: gunicorn basic-django-ecommerce.wsgi
-
-and `basic-django-ecommerce.wsgi`
+Gunicorn requires that you have n your project root the file `basic-django-ecommerce.wsgi`
 
     # this file must be given in input to gunicorn, 
     # and it is better that remains in root directory of the application.
@@ -456,7 +452,7 @@ and `basic-django-ecommerce.wsgi`
     from django.core.wsgi import get_wsgi_application
 
     # environment settings for Django app
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'basic-django-ecommerce.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mainapp_ecommerce.settings')
 
     # Initialize app Django
     application = get_wsgi_application()
