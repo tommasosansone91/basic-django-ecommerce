@@ -355,6 +355,9 @@ In the end, test that the app can be on the RPi without throwing any error.
 
     python manage.py runserver 0.0.0.0:8002
 
+> [!NOTE]
+> Here you cannot still see the app running on <RPi>:<external_port> LAN IP, because the "exteranal" port is not configured yet.
+
 
 ## Configure Nginx to serve the app
 
@@ -362,7 +365,7 @@ In the end, test that the app can be on the RPi without throwing any error.
     cd /var/www/basic-django-ecommerce
     source venv/bin/activate
 
-the default nginx configuration files are at paths
+the default nginx configuration files on the deploy machine are at paths
 
     /etc/nginx/sites-enabled/default
     /etc/nginx/sites-available/default
@@ -373,7 +376,7 @@ but we do not need the one in `sites-enabled`, so you can delete it
 
 Create the symbolic link
 
-    ln -s /var/www/basic-django-ecommerce/nginx/basic-django-ecommerce_nginx.conf /etc/nginx/conf.d/
+    ln -s /var/www/basic-django-ecommerce/infrastructure/nginx/basic-django-ecommerce_nginx.conf /etc/nginx/conf.d/
 
 Check that the symbolic link is right, run 
 
@@ -381,9 +384,9 @@ Check that the symbolic link is right, run
 
 you should see
 
-    lrwxrwxrwx 1 root root   35 Aug 24  2020 lab_app_nginx.conf -> /var/www/lab_app/lab_app_nginx.conf
+    lrwxrwxrwx 1 root root   86 May  5 13:34 basic-django-ecommerce_nginx.conf -> /var/www/basic-django-ecommerce/infrastructure/nginx/basic-django-ecommerce_nginx.conf
 
-This allows Nginx to find the app-specific configuration file `nginx/basic-django-ecommerce_nginx.conf` in the app directory when it searches for configuration files.
+This allows Nginx to find the app-specific configuration file `infrastructure/nginx/basic-django-ecommerce_nginx.conf` in the app directory when it searches for configuration files.
 
 ### Check that Nginx is working
 
@@ -498,7 +501,7 @@ Run
     
 Create the symbolic link
 
-    ln -s /var/www/basic-django-ecommerce/cron/basic-django-ecommerce-cron /etc/cron.d/
+    ln -s /var/www/basic-django-ecommerce/infrastructure/cron/basic-django-ecommerce-cron /etc/cron.d/
 
 Check that the symbolic link is right, run
 
@@ -506,9 +509,9 @@ Check that the symbolic link is right, run
 
 you should see
 
-    lrwxrwxrwx 1 root root 46 May  1 10:59 /etc/cron.d/basic-django-ecommerce-cron -> /var/www/basic-django-ecommerce/cron/basic-django-ecommerce-cron
+    lrwxrwxrwx 1 root root 46 May  1 10:59 /etc/cron.d/basic-django-ecommerce-cron -> /var/www/basic-django-ecommerce/infrastructure/cron/basic-django-ecommerce-cron
 
-This allows cron to find the app-specific cron file cron/basic-django-ecommerce-cron in the app directory.
+This allows cron to find the app-specific cron file `infrastructure/cron/basic-django-ecommerce-cron` in the app directory.
 
 **NOTE:**
 No `chmod` of the cron files is needed.<br>
@@ -551,8 +554,8 @@ make the file executable
 
 Create the symbolic links
 
-    ln -s /var/www/basic-django-ecommerce/systemd/basic-django-ecommerce.service /etc/systemd/system/
-    ln -s /var/www/basic-django-ecommerce/systemd/basic-django-ecommerce.service /etc/systemd/system/multi-user.target.wants/
+    ln -s /var/www/infrastructure/systemd/basic-django-ecommerce.service /etc/systemd/system/
+    ln -s /var/www/infrastructure/systemd/basic-django-ecommerce.service /etc/systemd/system/multi-user.target.wants/
 
 Check that the symbolic link is right, run
 
@@ -561,9 +564,9 @@ Check that the symbolic link is right, run
 
 you should see
 
-    lrwxrwxrwx 1 root root 52 May  1 11:04 /etc/systemd/system/multi-user.target.wants/basic-django-ecommerce.service -> /var/www/basic-django-ecommerce/systemd/basic-django-ecommerce.service
+    lrwxrwxrwx 1 root root 52 May  1 11:04 /etc/systemd/system/multi-user.target.wants/basic-django-ecommerce.service -> /var/www/infrastructure/systemd/basic-django-ecommerce.service
     
-    lrwxrwxrwx 1 root root 52 May  1 11:04 /etc/systemd/system/basic-django-ecommerce.service -> /var/www/basic-django-ecommerce/systemd/basic-django-ecommerce.service
+    lrwxrwxrwx 1 root root 52 May  1 11:04 /etc/systemd/system/basic-django-ecommerce.service -> /var/www/infrastructure/systemd/basic-django-ecommerce.service
 
 start the service 
 
