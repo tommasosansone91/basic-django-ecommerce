@@ -397,6 +397,14 @@ restart nginx
 
     /etc/init.d/nginx restart
 
+manually launch the app
+
+    sudo su
+    cd /var/www/basic-django-ecommerce
+    source venv/bin/activate
+
+    python manage.py runserver 0.0.0.0:8002
+    
 By using the browser of any other device (other than the RPi) connected to the LAN network,<br>
 connect via browser to both IP addresses
 
