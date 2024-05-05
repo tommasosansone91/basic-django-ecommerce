@@ -1,11 +1,7 @@
 
-.appunti heroku.txt
-.credenziali.txt
-.directory.txt
-.env
-.github info.txt
+
+.idea
 
 **/__pycache__/ 
 
-.essential_requirements.txt
 

@@ -1,0 +1,13 @@
+#-------------------------
+# cron per basic_django_ecommerce
+#-------------------------
+
+# sudo vim /etc/cron.d/basic_django_ecommerce-cron
+
+
+
+
+# tests
+# -------
+
+# * * * * * root cd /home/pi/;touch hello_time.txt;echo "hello the time is $(date)" >> hello_time.txt
