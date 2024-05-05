@@ -133,6 +133,10 @@ you should see the Nginx welcome page.
 
 ## Install Postgresql database
 
+> [!NOTE]
+> Remember that this procedure is written to install Postgres on the **deploy** machine. 
+> so, if you already installed it, remember that postgres credentials are the one of the **deploy** machine.
+
 ### Install
 
     sudo apt-get update
@@ -176,37 +180,42 @@ commit the change by exiting the shell
 
 ### Create a new database for the app
 
+> [!CAUTION]
+> Yyou are installing a new database on a certain machine.
+> Remember to note down the credentials of your user, app, database.
+> Otherwise, you will not be ble to access the database in abckend anymore.
+
 enter the postgres shell as `postgres` user
 
     psql -h localhost -U postgres -d postgres
 
 create the new database
 
-    create database basic-django-ecommerce;
+    create database basic_django_ecommerce;  -- dash not ammitted, only underscores
 
 create a "main" and a "readonly" user for the app
 
-    create user pcfdt_main WITH ENCRYPTED PASSWORD 'pcfdtmain';  -- choose short one
+    create user dbe_main WITH ENCRYPTED PASSWORD 'dbemain';  -- choose short one
 
-    create user pcfdt_readonly WITH ENCRYPTED PASSWORD 'pcfdtreadonly';  -- choose short one
+    create user dbe_readonly WITH ENCRYPTED PASSWORD 'dbereadonly';  -- choose short one
 
 make the main user the owner of the database
 
-    alter database basic-django-ecommerce OWNER TO pcfdt_main;
+    alter database basic_django_ecommerce OWNER TO dbe_main;
 
 exit the shell and test to reopen it as the "main user of the app"
 
     exit
 
-    psql -h localhost -U pcfdt_main -d basic-django-ecommerce
+    psql -h localhost -U dbe_main -d basic_django_ecommerce
 
 
 > [!IMPORTANT]
 > The database name, the database-owner user and its password become the credentials for the Django app to access the database.
 
-    'NAME': 'basic-django-ecommerce',
-    'USER': 'pcfdt_main',
-    'PASSWORD': 'pcfdtmain',
+    'NAME': 'basic_django_ecommerce',
+    'USER': 'dbe_main',
+    'PASSWORD': 'dbemain',
 
 These credentials must be inserted in the `DATABASES` variable in `settings.py` module of the Django main app (the one created by default by django, at the same folder level of the other django apps inside that Django project).
 
