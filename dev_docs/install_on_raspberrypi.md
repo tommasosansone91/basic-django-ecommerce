@@ -1,6 +1,6 @@
 # Install on Raspberry pi
 
-This procedure gives instructions on how to install the app basic_django_ecommerce on a Raspberry pi.
+This procedure gives instructions on how to install the app basic-django-ecommerce on a Raspberry pi.
 
 > [!IMPORTANT]
 > The Raspberry pi and the PC used for the deploy must be connected to the same LAN network.
@@ -105,7 +105,7 @@ get the git clone link from github:
 > [!NOTE]
 > Do not use the github link starting with git@...
 
-    git clone https://github.com/tommasosansone91/basic_django_ecommerce.git
+    git clone https://github.com/tommasosansone91/basic-django-ecommerce.git
 
 
 ## Install Nginx as web server and reverse proxy
@@ -113,8 +113,7 @@ get the git clone link from github:
 This is the *web server* (server the static files) and *reverse proxy* (forwards the dynamic requests to Django).
 
     sudo su
-    cd /var/www/basic_django_ecommerce
-    source venv/bin/activate
+    cd /var/www/basic-django-ecommerce
 
     apt-get update
     apt-get install nginx
@@ -183,7 +182,7 @@ enter the postgres shell as `postgres` user
 
 create the new database
 
-    create database basic_django_ecommerce;
+    create database basic-django-ecommerce;
 
 create a "main" and a "readonly" user for the app
 
@@ -193,19 +192,19 @@ create a "main" and a "readonly" user for the app
 
 make the main user the owner of the database
 
-    alter database basic_django_ecommerce OWNER TO pcfdt_main;
+    alter database basic-django-ecommerce OWNER TO pcfdt_main;
 
 exit the shell and test to reopen it as the "main user of the app"
 
     exit
 
-    psql -h localhost -U pcfdt_main -d basic_django_ecommerce
+    psql -h localhost -U pcfdt_main -d basic-django-ecommerce
 
 
 > [!IMPORTANT]
 > The database name, the database-owner user and its password become the credentials for the Django app to access the database.
 
-    'NAME': 'basic_django_ecommerce',
+    'NAME': 'basic-django-ecommerce',
     'USER': 'pcfdt_main',
     'PASSWORD': 'pcfdtmain',
 
@@ -236,7 +235,7 @@ These credentials must be inserted in the `DATABASES` variable in `settings.py` 
 
     sudo su
 
-    cd /var/www/basic_django_ecommerce
+    cd /var/www/basic-django-ecommerce
 
 specifically use python3 to create a virtual environment for the app in folder `venv`
 
@@ -250,7 +249,7 @@ ativate and deactivate the virtual environment only for testing
 ## Install the python modules web framework django
 
     sudo su
-    cd /var/www/basic_django_ecommerce
+    cd /var/www/basic-django-ecommerce
     source venv/bin/activate
 
 > [!WARNING]
@@ -285,7 +284,7 @@ for every package which raises problems, open the file `requirements.txt`, look 
 Once the app framework and postgres are both installed, create the tables required by the app to operate correctly.
 
     sudo su
-    cd /var/www/basic_django_ecommerce
+    cd /var/www/basic-django-ecommerce
     source venv/bin/activate
 
     python manage.py makemigrations
@@ -297,7 +296,7 @@ Once the app framework and postgres are both installed, create the tables requir
 Create superuser in order to access the admin section of the app.
 
     sudo su
-    cd /var/www/basic_django_ecommerce
+    cd /var/www/basic-django-ecommerce
     source venv/bin/activate
 
     python manage.py createsuperuser
@@ -316,14 +315,14 @@ So, every time new static files are developed in `STATICFILES_DIRS` folders, the
 This can be done by running the django command `collectstatic`.
 
     sudo su
-    cd /var/www/basic_django_ecommerce
+    cd /var/www/basic-django-ecommerce
     source venv/bin/activate
 
     python manage.py collectstatic   
 
 ## Configure the app to be hosted on the RPi
 
-In `basic_django_ecommerce/settings.py`, insert the IP of the RPi in the list variable `ALLOWED_HOSTS`
+In `basic-django-ecommerce/settings.py`, insert the IP of the RPi in the list variable `ALLOWED_HOSTS`
 
     ALLOWED_HOSTS = ['<RPi_IP>']
 
@@ -336,7 +335,7 @@ to allow the app to be hosted on any server (not recommanded for security reason
 In the end, test that the app can be on the RPi without throwing any error.
 
     sudo su
-    cd /var/www/basic_django_ecommerce
+    cd /var/www/basic-django-ecommerce
     source venv/bin/activate
 
     python manage.py runserver 0.0.0.0:8002
@@ -345,7 +344,7 @@ In the end, test that the app can be on the RPi without throwing any error.
 ## Configure Nginx to serve the app
 
     sudo su
-    cd /var/www/basic_django_ecommerce
+    cd /var/www/basic-django-ecommerce
     source venv/bin/activate
 
 the default nginx configuration files are at paths
@@ -359,7 +358,7 @@ but we do not need the one in `sites-enabled`, so you can delete it
 
 Create the symbolic link
 
-    ln -s /var/www/basic_django_ecommerce/nginx/basic_django_ecommerce_nginx.conf /etc/nginx/conf.d/
+    ln -s /var/www/basic-django-ecommerce/nginx/basic-django-ecommerce_nginx.conf /etc/nginx/conf.d/
 
 Check that the symbolic link is right, run 
 
@@ -369,7 +368,7 @@ you should see
 
     lrwxrwxrwx 1 root root   35 Aug 24  2020 lab_app_nginx.conf -> /var/www/lab_app/lab_app_nginx.conf
 
-This allows Nginx to find the app-specific configuration file `nginx/basic_django_ecommerce_nginx.conf` in the app directory when it searches for configuration files.
+This allows Nginx to find the app-specific configuration file `nginx/basic-django-ecommerce_nginx.conf` in the app directory when it searches for configuration files.
 
 ### Check that Nginx is working
 
@@ -395,7 +394,7 @@ in case of errors, to rollback to the previous configuration, run
 
     sudo su
     cd /etc/nginx/conf.d/
-    rm /etc/nginx/conf.d/basic_django_ecommerce_nginx.conf
+    rm /etc/nginx/conf.d/basic-django-ecommerce_nginx.conf
 
     systemctl stop nginx.service
     systemctl start nginx.service
@@ -410,7 +409,7 @@ In other words, it is a web server designed to run Python web applications that 
 ### install gunicorn
 
     sudo su
-    cd /var/www/basic_django_ecommerce
+    cd /var/www/basic-django-ecommerce
     source venv/bin/activate
 
     pip install gunicorn
@@ -423,10 +422,10 @@ It binds the app **internal** port (8002) on which the app is exposed by the com
 The `--bind` part tells Gunicorn that it has to listen HTTP requests coming from that port (from the app).
 
     sudo su
-    cd /var/www/basic_django_ecommerce
+    cd /var/www/basic-django-ecommerce
     source venv/bin/activate
 
-    PYTHONPATH=`pwd`/.. venv/bin/gunicorn basic_django_ecommerce.wsgi:application --bind localhost:8002
+    PYTHONPATH=`pwd`/.. venv/bin/gunicorn basic-django-ecommerce.wsgi:application --bind localhost:8002
 
 See here why PYTHONPATH=\`pwd\`/.. is required at the start of the line.
 
@@ -444,16 +443,16 @@ http://192.168.1.106:3002/
 > The starting, stopping and starting-at-boot of the app should be managed via systemd and the systemctl syntax, which should be implemented as last step of the app installation process.
 
     sudo su
-    cd /var/www/basic_django_ecommerce/
+    cd /var/www/basic-django-ecommerce/
     source venv/bin/activate
 
-    sudo nohup env PYTHONPATH=`pwd`/.. venv/bin/gunicorn basic_django_ecommerce.wsgi:application --bind localhost:8002 > /home/pi/basic_django_ecommerce.log 2>&1 &
+    sudo nohup env PYTHONPATH=`pwd`/.. venv/bin/gunicorn basic-django-ecommerce.wsgi:application --bind localhost:8002 > /home/pi/basic-django-ecommerce.log 2>&1 &
 
 
 #### check that the app is up and running
 
     echo "Grepping the app name from ps aux"
-    echo "$(ps aux | grep 'basic_django_ecommerce')"
+    echo "$(ps aux | grep 'basic-django-ecommerce')"
 
 
 #### exit the machine gracefully
@@ -479,22 +478,22 @@ of the RPi.
 Run
 
     sudo su
-    cd /var/www/basic_django_ecommerce/
+    cd /var/www/basic-django-ecommerce/
     source venv/bin/activate
     
 Create the symbolic link
 
-    ln -s /var/www/basic_django_ecommerce/cron/basic_django_ecommerce-cron /etc/cron.d/
+    ln -s /var/www/basic-django-ecommerce/cron/basic-django-ecommerce-cron /etc/cron.d/
 
 Check that the symbolic link is right, run
 
-    ll /etc/cron.d/basic_django_ecommerce-cron
+    ll /etc/cron.d/basic-django-ecommerce-cron
 
 you should see
 
-    lrwxrwxrwx 1 root root 46 May  1 10:59 /etc/cron.d/basic_django_ecommerce-cron -> /var/www/basic_django_ecommerce/cron/basic_django_ecommerce-cron
+    lrwxrwxrwx 1 root root 46 May  1 10:59 /etc/cron.d/basic-django-ecommerce-cron -> /var/www/basic-django-ecommerce/cron/basic-django-ecommerce-cron
 
-This allows cron to find the app-specific cron file cron/basic_django_ecommerce-cron in the app directory.
+This allows cron to find the app-specific cron file cron/basic-django-ecommerce-cron in the app directory.
 
 **NOTE:**
 No `chmod` of the cron files is needed.<br>
@@ -509,7 +508,7 @@ Just enable the execution of the files target of the cron
 
 Create directrory to host logs
 
-    sudo mkdir /var/log/basic_django_ecommerce/
+    sudo mkdir /var/log/basic-django-ecommerce/
 
 
 ## Turn the app into a service
@@ -528,41 +527,41 @@ The second one will allow them to be automatically started as service as the mac
 Run
 
     sudo su
-    cd /var/www/basic_django_ecommerce/
+    cd /var/www/basic-django-ecommerce/
     source venv/bin/activate
 
 make the file executable 
 
-    sudo chmod +x basic_django_ecommerce.service
+    sudo chmod +x basic-django-ecommerce.service
 
 Create the symbolic links
 
-    ln -s /var/www/basic_django_ecommerce/systemd/basic_django_ecommerce.service /etc/systemd/system/
-    ln -s /var/www/basic_django_ecommerce/systemd/basic_django_ecommerce.service /etc/systemd/system/multi-user.target.wants/
+    ln -s /var/www/basic-django-ecommerce/systemd/basic-django-ecommerce.service /etc/systemd/system/
+    ln -s /var/www/basic-django-ecommerce/systemd/basic-django-ecommerce.service /etc/systemd/system/multi-user.target.wants/
 
 Check that the symbolic link is right, run
 
-    ll /etc/systemd/system/multi-user.target.wants/basic_django_ecommerce.service
-    ll /etc/systemd/system/basic_django_ecommerce.service
+    ll /etc/systemd/system/multi-user.target.wants/basic-django-ecommerce.service
+    ll /etc/systemd/system/basic-django-ecommerce.service
 
 you should see
 
-    lrwxrwxrwx 1 root root 52 May  1 11:04 /etc/systemd/system/multi-user.target.wants/basic_django_ecommerce.service -> /var/www/basic_django_ecommerce/systemd/basic_django_ecommerce.service
+    lrwxrwxrwx 1 root root 52 May  1 11:04 /etc/systemd/system/multi-user.target.wants/basic-django-ecommerce.service -> /var/www/basic-django-ecommerce/systemd/basic-django-ecommerce.service
     
-    lrwxrwxrwx 1 root root 52 May  1 11:04 /etc/systemd/system/basic_django_ecommerce.service -> /var/www/basic_django_ecommerce/systemd/basic_django_ecommerce.service
+    lrwxrwxrwx 1 root root 52 May  1 11:04 /etc/systemd/system/basic-django-ecommerce.service -> /var/www/basic-django-ecommerce/systemd/basic-django-ecommerce.service
 
 start the service 
 
-    sudo systemctl start basic_django_ecommerce.service
+    sudo systemctl start basic-django-ecommerce.service
 
 and check it is allright
 
-    sudo systemctl status basic_django_ecommerce.service
+    sudo systemctl status basic-django-ecommerce.service
 
 To make this service automatically run on boot
 
     sudo systemctl daemon-reload
-    sudo systemctl enable basic_django_ecommerce.service
+    sudo systemctl enable basic-django-ecommerce.service
 
 In the end, test that the service works after the RPi booting
 
@@ -580,12 +579,12 @@ http://192.168.1.106:3002/
 In case you want to disable the program on boot
 
     sudo systemctl daemon-reload
-    sudo systemctl disable basic_django_ecommerce.service
+    sudo systemctl disable basic-django-ecommerce.service
 
 Documentation https://www.freedesktop.org/software/systemd/man/systemd.service.html
 
 <hr>
 
 ```diff
-+ The app basic_django_ecommerce is now successfully installed!
++ The app basic-django-ecommerce is now successfully installed!
 ```

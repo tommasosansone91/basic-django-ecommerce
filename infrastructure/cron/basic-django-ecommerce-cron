@@ -1,8 +1,8 @@
 #-------------------------
-# cron per basic_django_ecommerce
+# cron per basic-django-ecommerce
 #-------------------------
 
-# sudo vim /etc/cron.d/basic_django_ecommerce-cron
+# sudo vim /etc/cron.d/basic-django-ecommerce-cron
 
 
 

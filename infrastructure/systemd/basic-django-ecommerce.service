@@ -30,7 +30,7 @@
 
 #------------------------------------------------------------------------
 
-Description=service for starting the app basic_django_ecommerce on RPi
+Description=service for starting the app basic-django-ecommerce on RPi
 
 After=network.target
 # This will not start execution of this file until the network connection is made
@@ -40,11 +40,11 @@ After=network.target
 
 
 [Service]
-WorkingDirectory=/var/www/basic_django_ecommerce/
-ExecStart=/var/www/basic_django_ecommerce/venv/bin/gunicorn basic_django_ecommerce.wsgi:application --bind localhost:8002
+WorkingDirectory=/var/www/basic-django-ecommerce/
+ExecStart=/var/www/basic-django-ecommerce/venv/bin/gunicorn basic-django-ecommerce.wsgi:application --bind localhost:8002
 
-StandardOutput=file:/var/log/basic_django_ecommerce/basic_django_ecommerce-stdout.log
-StandardError=file:/var/log/basic_django_ecommerce/basic_django_ecommerce-stderr.log
+StandardOutput=file:/var/log/basic-django-ecommerce/basic-django-ecommerce-stdout.log
+StandardError=file:/var/log/basic-django-ecommerce/basic-django-ecommerce-stderr.log
 #Optional: Saves the output and error log of the terminal to a .log file in a directory of your choosing.
 
 Restart=always
