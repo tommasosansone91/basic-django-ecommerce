@@ -18,7 +18,7 @@
   <div class='container'>
 
     <a class="navbar-brand" href="{{ home_url }}"></a>
-    <img src="{% static 'img/bootstrap.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+    {% comment %} <img src="{% static 'img/bootstrap.png' %}" width="30" height="30" class="d-inline-block align-top" alt=""> {% endcomment %}
     
     {% if brand_name %} {{ brand_name}} {% else %} complete eCommerce brane name {% endif %}
     </a>
