@@ -628,6 +628,14 @@ Documentation https://www.freedesktop.org/software/systemd/man/systemd.service.h
 
 <hr>
 
+In case you made changes to the service configurations and you want to make them effective
+
+    sudo systemctl daemon-reload
+    sudo systemctl restart basic-django-ecommerce.service
+    sudo systemctl status basic-django-ecommerce.service
+
+<hr>
+
 ```diff
 + The app basic-django-ecommerce is now successfully installed!
 ```
