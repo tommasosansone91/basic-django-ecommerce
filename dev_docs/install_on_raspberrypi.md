@@ -374,6 +374,12 @@ but we do not need the one in `sites-enabled`, so you can delete it
 
     rm /etc/nginx/sites-enabled/default
 
+The files in the app folder `infrastructure/nginx/` must be symbolically linked into directory
+
+    /etc/nginx/conf.d/
+
+of the RPi. 
+
 Create the symbolic link
 
     ln -s /var/www/basic-django-ecommerce/infrastructure/nginx/basic-django-ecommerce_nginx.conf /etc/nginx/conf.d/
@@ -382,7 +388,7 @@ Check that the symbolic link is right, run
 
     ll /etc/nginx/conf.d
 
-you should see
+you should see the symbolic link and check that it is not colored in red
 
     lrwxrwxrwx 1 root root   86 May  5 13:34 basic-django-ecommerce_nginx.conf -> /var/www/basic-django-ecommerce/infrastructure/nginx/basic-django-ecommerce_nginx.conf
 
@@ -443,19 +449,30 @@ In other words, it is a web server designed to run Python web applications that 
 
 ### check you have wsgi file
 
-Gunicorn requires that you have n your project root the file `basic-django-ecommerce.wsgi`
+> [!NOTE]
+> Gunicorn requires that you have the .wsgi files in the root directory of your project , and **it will not be able to read it if it is elsewhere**.
 
-    # this file must be given in input to gunicorn, 
-    # and it is better that remains in root directory of the application.
+The files in the app folder `infrastructure/wsgi/` must be symbolically linked into the root directory of the project.
 
-    import os
-    from django.core.wsgi import get_wsgi_application
+    /var/www/basic-django-ecommerce/
 
-    # environment settings for Django app
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mainapp_ecommerce.settings')
+Run
 
-    # Initialize app Django
-    application = get_wsgi_application()
+    sudo su
+    cd /var/www/basic-django-ecommerce
+    source venv/bin/activate 
+
+Create the symbolic link
+
+    ln -s /var/www/basic-django-ecommerce/infrastructure/wsgi/mainapp_ecommerce.wsgi /var/www/basic-django-ecommerce/
+
+Check that the symbolic link is right, run 
+
+    ll /var/www/basic-django-ecommerce/
+
+you should see the symbolic link and check that it is not colored in red
+
+    lrwxrwxrwx  1 root root   74 May  5 15:26 mainapp_ecommerce.wsgi -> /var/www/basic-django-ecommerce/infrastructure/wsgi/mainapp_ecommerce.wsgi
 
 
 ### run the app manually via gunicorn
@@ -512,7 +529,7 @@ http://192.168.1.106:3002/
 
 ## cron files
 
-The files in the app folder `cron/` must be symbolically linked into directory
+The files in the app folder `infrastructure/cron/` must be symbolically linked into directory
 
     /etc/cron.d/
 
@@ -532,7 +549,7 @@ Check that the symbolic link is right, run
 
     ll /etc/cron.d/basic-django-ecommerce-cron
 
-you should see
+you should see the symbolic link and check that it is not colored in red
 
     lrwxrwxrwx 1 root root 46 May  1 10:59 /etc/cron.d/basic-django-ecommerce-cron -> /var/www/basic-django-ecommerce/infrastructure/cron/basic-django-ecommerce-cron
 
@@ -556,7 +573,7 @@ Create directrory to host logs
 
 ## Turn the app into a service
 
-The files in the app folder `systemd/` must be symbolically linked into directory
+The files in the app folder `infrastructure/systemd/` must be symbolically linked into directory
 
     /etc/systemd/system 
     /etc/systemd/system/multi-user.target.wants/
@@ -587,7 +604,7 @@ Check that the symbolic link is right, run
     ll /etc/systemd/system/multi-user.target.wants/basic-django-ecommerce.service
     ll /etc/systemd/system/basic-django-ecommerce.service
 
-you should see
+you should see the symbolic link and check that it is not colored in red
 
     lrwxrwxrwx 1 root root 52 May  1 11:04 /etc/systemd/system/multi-user.target.wants/basic-django-ecommerce.service -> /var/www/infrastructure/systemd/basic-django-ecommerce.service
     
