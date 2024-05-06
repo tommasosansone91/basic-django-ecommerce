@@ -222,7 +222,7 @@ These credentials must be inserted in the `DATABASES` variable in `settings.py` 
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': '<name here>',
+            'NAME': '<db name here>',
             'USER': '<user here>',
             'PASSWORD': '<password here>',
             'HOST': 'localhost',
