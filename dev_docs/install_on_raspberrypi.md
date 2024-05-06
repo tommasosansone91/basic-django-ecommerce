@@ -219,6 +219,16 @@ exit the shell and test to reopen it as the "main user of the app"
 
 These credentials must be inserted in the `DATABASES` variable in `settings.py` module of the Django main app (the one created by default by django, at the same folder level of the other django apps inside that Django project).
 
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': '<name here>',
+            'USER': '<user here>',
+            'PASSWORD': '<password here>',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 ## Install Python
 
