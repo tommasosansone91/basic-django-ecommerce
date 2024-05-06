@@ -102,8 +102,11 @@ get the git clone link from github:
 - `HTTPS` tab
 - copy the link
 
-> [!NOTE]
-> Do not use the github link starting with git@...
+> [!IMPORTANT]
+> On deploy machine, git clone the project by using the github link starting with `https`. 
+> This one allows to pull the project easily (but it should not allow the user to push changes to github, so it is safer).<br>
+> On development, git clone the project by using the github link starting with  `git@`.
+> This one allows to git push the project easily by using github SSH authentication method (SSH key exchange between github and the machine).
 
     git clone https://github.com/tommasosansone91/basic-django-ecommerce.git
 
