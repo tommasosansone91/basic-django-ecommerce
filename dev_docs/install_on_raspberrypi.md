@@ -242,6 +242,11 @@ These credentials must be inserted in the `DATABASES` variable in `settings.py` 
 
 ## create virtual environment
 
+> [!NOTE]
+> This procedure is to create a virtual environment on the deploy machine, the RPi.<br>
+> To create the virtual environment on the development machine, just run `python3 -m venv ./venv/` .<br>
+> Syntax: `python3 -m venv ./<virtual_environment_name>/`
+
     sudo su
 
     cd /var/www/basic-django-ecommerce
