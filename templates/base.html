@@ -11,6 +11,10 @@
     <!-- <title>Base template</title> -->
     {% include 'base/css.html' %} <!-- questo inietta il codice di una pagina nel punto in cui è messo -->
 
+    <!-- favicon -->
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'img/favicons/favicon_basic_django_ecommerce.png' %}" />
+
   </head>
 
 
