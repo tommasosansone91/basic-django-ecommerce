@@ -608,10 +608,6 @@ Run
     cd /var/www/basic-django-ecommerce/
     source venv/bin/activate
 
-make the file executable 
-
-    sudo chmod +x basic-django-ecommerce.service
-
 Create the symbolic links
 
     ln -s /var/www/basic-django-ecommerce/infrastructure/systemd/basic-django-ecommerce.service /etc/systemd/system/
