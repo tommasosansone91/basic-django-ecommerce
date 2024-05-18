@@ -8,10 +8,10 @@
 
 Lancia manualmente copiando lo script e incollandolo nella shell comando per comando, o non funziona.
 
-    cd /var/www/piste_ciclabili_fantastiche/
+    cd /var/www/basic-django-ecommerce/
     source venv/bin/activate
 
-    sudo nohup env PYTHONPATH=`pwd`/.. venv/bin/gunicorn piste_ciclabili_fantastiche.wsgi:application --bind localhost:8001 > /home/pi/piste_ciclabili_fantastiche.log 2>&1 &
+    sudo nohup env PYTHONPATH=`pwd`/.. venv/bin/gunicorn mainapp_ecommerce.wsgi:application --bind localhost:8001 > /home/pi/basic-django-ecommerce.log 2>&1 &
 
 
     cd $current_dir
@@ -19,7 +19,7 @@ Lancia manualmente copiando lo script e incollandolo nella shell comando per com
 ### check that the app is up and running
 
     echo "Grepping the app name from ps aux"
-    echo "$(ps aux | grep 'piste_ciclabili_fantastiche')"
+    echo "$(ps aux | grep 'basic-django-ecommerce')"
 
 ### exit gracefully
 
