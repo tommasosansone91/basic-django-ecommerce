@@ -620,9 +620,9 @@ Check that the symbolic link is right, run
 
 you should see the symbolic link and check that it is not colored in red
 
-    lrwxrwxrwx 1 root root 52 May  1 11:04 /etc/systemd/system/multi-user.target.wants/basic-django-ecommerce.service -> /var/www/infrastructure/systemd/basic-django-ecommerce.service
+    lrwxrwxrwx 1 root root 52 May  1 11:04 /etc/systemd/system/multi-user.target.wants/basic-django-ecommerce.service -> /var/www/basic-django-ecommerce/infrastructure/systemd/basic-django-ecommerce.service
     
-    lrwxrwxrwx 1 root root 52 May  1 11:04 /etc/systemd/system/basic-django-ecommerce.service -> /var/www/infrastructure/systemd/basic-django-ecommerce.service
+    lrwxrwxrwx 1 root root 52 May  1 11:04 /etc/systemd/system/basic-django-ecommerce.service -> /var/www/basic-django-ecommerce/infrastructure/systemd/basic-django-ecommerce.service
 
 start the service 
 
